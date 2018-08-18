@@ -34,10 +34,15 @@
 
   <!-- Full package version strings that are used in other parts of the build. -->
   <PropertyGroup>
-    <AppXRunnerVersion>1.0.3-prerelease-00921-01</AppXRunnerVersion>
     <CoreFxBaseLinePackageVersion>2.2.0-preview1-26020-03</CoreFxBaseLinePackageVersion>
-    <XunitPerfAnalysisPackageVersion>1.0.0-beta-build0019</XunitPerfAnalysisPackageVersion>
-    <XunitNetcoreExtensionsVersion>2.1.0-rc1-03006-01</XunitNetcoreExtensionsVersion>
+    
+    <!-- xunit test dependency version  -->
+    <MicrosoftDotNetTestSdkVersion>15.8.0</MicrosoftDotNetTestSdkVersion>
+    <XUnitPackageVersion>2.4.0</XUnitPackageVersion>
+    <XUnitPerformancePackageVersion>1.0.0-beta-build0020</XUnitPerformancePackageVersion>
+    <TraceEventPackageVersion>2.0.5</TraceEventPackageVersion>
+    <MicrosoftDotNetXUnitExtensionsVersion>2.4.0-prerelease-63123-07</MicrosoftDotNetXUnitExtensionsVersion>
+    <UAPToolsPackageVersion>1.0.18</UAPToolsPackageVersion>
 
     <CoreClrPackageVersion>2.2.0-preview1-26430-05</CoreClrPackageVersion>
     <DotNetHostPackageVersion>2.0.0-preview2-25310-02</DotNetHostPackageVersion>
@@ -95,15 +100,16 @@
       <PackageId>Microsoft.DotNet.BuildTools</PackageId>
     </UpdateStep>
     <XmlUpdateStep Include="BuildTools">
+       <Path>$(MSBuildThisFileFullPath)</Path>
+       <ElementName>MicrosoftDotNetXUnitExtensionsVersion</ElementName>
+       <PackageId>Microsoft.DotNet.XUnitExtensions</PackageId>
+     </XmlUpdateStep>
+    <XmlUpdateStep Include="BuildTools">
       <Path>$(MSBuildThisFileFullPath)</Path>
       <ElementName>FeedTasksPackageVersion</ElementName>
       <PackageId>$(FeedTasksPackage)</PackageId>
     </XmlUpdateStep>
   </ItemGroup>
-
-  <PropertyGroup>
-    <XUnitPackageVersion>2.3.0-beta1-build3642</XUnitPackageVersion>
-  </PropertyGroup>
 
   <!-- Set up dependencies on packages that aren't found in a BuildInfo. -->
   <ItemGroup>
@@ -128,18 +134,13 @@
       <Version>$(XUnitPackageVersion)</Version>
     </StaticDependency>
 
-    <StaticDependency Include="Microsoft.xunit.netcore.extensions;Microsoft.DotNet.BuildTools.TestSuite">
-      <Version>$(XunitNetcoreExtensionsVersion)</Version>
+    <StaticDependency Include="Microsoft.DotNet.XUnitExtensions;Microsoft.DotNet.BuildTools.TestSuite">
+      <Version>$(MicrosoftDotNetXUnitExtensionsVersion)</Version>
     </StaticDependency>
 
     <DependencyBuildInfo Include="@(StaticDependency)">
       <PackageId>%(Identity)</PackageId>
       <UpdateStableVersions>true</UpdateStableVersions>
-    </DependencyBuildInfo>
-
-    <DependencyBuildInfo Include="uwpRunnerVersion">
-      <PackageId>microsoft.xunit.runner.uwp</PackageId>
-      <Version>$(AppXRunnerVersion)</Version>
     </DependencyBuildInfo>
 
   </ItemGroup>

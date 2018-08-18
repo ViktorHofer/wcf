@@ -1,4 +1,9 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\dir.props" />
   <Import Project=".\test.props" />
+
+  <!-- Disable package restore -->
+  <GenerateDependencyFile>false</GenerateDependencyFile>
+  <ComputeNETCoreBuildOutputFiles>false</ComputeNETCoreBuildOutputFiles>
+  <GenerateRuntimeConfigurationFiles>false</GenerateRuntimeConfigurationFiles>
 </Project>
